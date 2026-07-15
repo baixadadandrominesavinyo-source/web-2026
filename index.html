@@ -396,7 +396,7 @@
     <div class="route-stop route-stop-secret">
       <div class="route-dot">❓</div>
       <div class="route-name" style="color:var(--orange); font-family:var(--font-display); font-size:1rem; letter-spacing:1px;">SORPRESA</div>
-      <div class="route-km" style="color:var(--orange-light);">???m</div>
+      <div class="route-km" style="color:var(--orange-light);">???</div>
     </div>
     <div class="route-line"></div>
     <div class="route-stop">
@@ -566,19 +566,6 @@
 </footer>
 
 <script>
-// SCROLL SORPRESA
-const secretStop = document.querySelector('.route-stop-secret');
-if (secretStop) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.5 });
-  observer.observe(secretStop);
-}
-
 function toggleMenu() {
   document.getElementById('hamburger').classList.toggle('open');
   document.getElementById('nav-mobile').classList.toggle('open');
@@ -590,6 +577,19 @@ document.addEventListener('DOMContentLoaded', () => {
     theme: 'andromines',
     headings: ['Dies', 'Hores', 'Minuts', 'Segons']
   }).start();
+
+  // ANIMACIÓ SORPRESA
+  const secretStop = document.querySelector('.route-stop-secret');
+  if (secretStop) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          secretStop.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.3, rootMargin: '0px 0px -50px 0px' });
+    observer.observe(secretStop);
+  }
 });
 
 function switchTab(tab, btn) {
