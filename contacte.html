@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qui som - Baixada d'Andròmines 2026 · Avinyó</title>
+<meta name="description" content="Coneix l'equip organitzador de la Baixada d'Andròmines d'Avinyó. Una colla d'amics que ha recuperat una tradició del poble.">
+<link rel="canonical" href="https://baixadandrominesavinyo.cat/contacte.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF5A00;
+    --orange-light: #FF8C42;
+    --dark: #0D0D0D;
+    --dark2: #161616;
+    --dark3: #1E1E1E;
+    --dark4: #2A2A2A;
+    --light: #F5F2EC;
+    --gray: #888;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--dark); color: var(--light); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(13,13,13,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,90,0,0.15);
+  }
+  .nav-logo { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 2px; color: var(--orange); text-decoration: none; }
+  .nav-back { display: flex; align-items: center; gap: 8px; color: var(--light); text-decoration: none; font-size: 0.85rem; font-weight: 300; letter-spacing: 1px; text-transform: uppercase; opacity: 0.7; transition: opacity 0.2s; }
+  .nav-back:hover { opacity: 1; color: var(--orange); }
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+  .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--light); transition: all 0.3s; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .nav-mobile { display: none; position: fixed; top: 60px; left: 0; right: 0; background: rgba(13,13,13,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,90,0,0.15); z-index: 99; padding: 1.5rem; flex-direction: column; gap: 1rem; }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a { color: var(--light); text-decoration: none; font-size: 1.1rem; font-weight: 300; letter-spacing: 1px; text-transform: uppercase; opacity: 0.8; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .nav-mobile a:last-child { border-bottom: none; }
+
+  /* HERO AMB FOTO */
+  .hero-foto {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+  .hero-foto-img {
+    position: absolute;
+    inset: 0;
+    background: url('equip.jpeg') center center / cover no-repeat;
+    filter: brightness(0.4);
+  }
+  .hero-foto-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, var(--dark) 0%, transparent 60%);
+  }
+  .hero-foto-content {
+    position: relative;
+    padding: 0 3rem 4rem;
+  }
+  .section-eyebrow { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); margin-bottom: 1rem; }
+  .hero-title { font-family: var(--font-display); font-size: clamp(3.5rem, 10vw, 7rem); line-height: 0.9; letter-spacing: 2px; }
+  .hero-title span { color: var(--orange); }
+
+  /* CONTINGUT */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    padding: 5rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* QUI SOM */
+  .qui-som h2 { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 2px; color: var(--orange); margin-bottom: 2rem; }
+  .qui-som p { font-size: 1rem; line-height: 1.9; color: rgba(245,242,236,0.75); margin-bottom: 1.5rem; }
+  .qui-som p:last-child { margin-bottom: 0; }
+
+  /* CONTACTE */
+  .contacte-bloc h2 { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 2px; color: var(--orange); margin-bottom: 2rem; }
+  .correu-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--dark3);
+    border: 1px solid rgba(255,90,0,0.2);
+    border-radius: 4px;
+    margin-bottom: 2rem;
+    text-decoration: none;
+    color: var(--light);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .correu-box:hover { border-color: var(--orange); background: rgba(255,90,0,0.06); }
+  .correu-icon { font-size: 1.5rem; }
+  .correu-label { font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); margin-bottom: 4px; }
+  .correu-val { font-size: 0.95rem; font-weight: 500; }
+
+  /* FORMULARI */
+  .form-title { font-family: var(--font-display); font-size: 2rem; margin-bottom: 1.5rem; }
+  .form-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1rem; }
+  .form-field label { font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); }
+  .form-field input, .form-field textarea { background: var(--dark2); border: 1px solid rgba(255,255,255,0.1); border-radius: 2px; padding: 12px 16px; color: var(--light); font-family: var(--font-body); font-size: 0.95rem; transition: border-color 0.2s; outline: none; }
+  .form-field input:focus, .form-field textarea:focus { border-color: var(--orange); }
+  .form-field textarea { resize: vertical; min-height: 120px; }
+  .btn-main { background: var(--orange); color: white; padding: 14px 36px; font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; border: none; border-radius: 2px; cursor: pointer; transition: background 0.2s; width: 100%; margin-top: 0.5rem; }
+  .btn-main:hover { background: var(--orange-light); }
+
+  /* MODAL */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .modal-overlay.show { opacity: 1; pointer-events: all; }
+  .modal-box { background: var(--dark3); border-radius: 4px; padding: 2.5rem; max-width: 420px; width: 90%; text-align: center; border-top: 4px solid var(--color); }
+  .modal-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .modal-title { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--color); }
+  .modal-text { font-size: 0.9rem; color: var(--gray); margin-bottom: 1.5rem; line-height: 1.6; }
+  .modal-btn { background: var(--color); color: white; border: none; padding: 10px 28px; border-radius: 2px; cursor: pointer; font-family: var(--font-body); font-size: 0.9rem; }
+
+  /* FOOTER */
+  footer { background: var(--dark); border-top: 1px solid rgba(255,90,0,0.15); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .footer-logo { font-family: var(--font-display); font-size: 1.4rem; color: var(--orange); letter-spacing: 2px; }
+  .footer-text { font-size: 0.8rem; color: var(--gray); }
+
+  /* MÒBIL */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-back span { display: none; }
+    .nav-hamburger { display: flex; }
+    .hero-foto { min-height: 50vh; }
+    .hero-foto-content { padding: 0 1.5rem 3rem; }
+    .content-grid { grid-template-columns: 1fr; gap: 3rem; padding: 3rem 1.5rem; }
+    footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">ANDRÒMINES AVINYÓ</a>
+  <a href="index.html" class="nav-back">← Tornar a l'inici</a>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menú" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MENÚ MÒBIL -->
+<nav class="nav-mobile" id="nav-mobile">
+  <a href="index.html" onclick="toggleMenu()">← Tornar a l'inici</a>
+</nav>
+
+<!-- HERO AMB FOTO -->
+<div class="hero-foto">
+  <div class="hero-foto-img"></div>
+  <div class="hero-foto-gradient"></div>
+  <div class="hero-foto-content">
+    <div class="section-eyebrow">L'organització</div>
+    <h1 class="hero-title">QUI<br>SOM<br><span>NOSALTRES</span></h1>
+  </div>
+</div>
+
+<!-- CONTINGUT -->
+<div class="content-grid">
+
+  <!-- QUI SOM -->
+  <div class="qui-som">
+    <h2>LA NOSTRA HISTÒRIA</h2>
+    <p>Som una colla d'amics d'Avinyó que vam decidir recuperar una tradició del poble: la Baixada d'Andròmines. Un esdeveniment que ja s'havia celebrat anys enrere i que volíem tornar a fer reviure per a tothom.</p>
+    <p>Amb l'ajuda de l'Ajuntament d'Avinyó i moltes ganes, hem aconseguit posar en marxa de nou aquesta festa on l'enginy, la creativitat i el bon humor són els protagonistes.</p>
+    <p>La Baixada d'Andròmines és més que una cursa — és una excusa per reunir el poble, divertir-se i demostrar que amb imaginació i treball en equip es poden fer coses molt xules.</p>
+  </div>
+
+  <!-- CONTACTE -->
+  <div class="contacte-bloc">
+    <h2>CONTACTE</h2>
+    <h2 class="form-title">ENVIA'NS UN MISSATGE</h2>
+    <div class="form-field">
+      <label>Nom</label>
+      <input type="text" id="nom" placeholder="El teu nom">
+    </div>
+    <div class="form-field">
+      <label>Correu electrònic</label>
+      <input type="email" id="correu" placeholder="correu@exemple.com">
+    </div>
+    <div class="form-field">
+      <label>Missatge</label>
+      <textarea id="missatge" placeholder="Escriu el teu missatge..."></textarea>
+    </div>
+    <button class="btn-main" onclick="enviarMissatge()">Enviar missatge</button>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box" id="modal-box">
+    <div class="modal-icon" id="modal-icon"></div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-text" id="modal-text"></div>
+    <button class="modal-btn" onclick="tancarModal()">D'acord</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ANDRÒMINES 2026</div>
+  <div class="footer-text">© 2026 Baixada d'Andròmines · Avinyó · Tots els drets reservats</div>
+  <div class="footer-text">Dissenyat amb 🔧 i passió</div>
+</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('nav-mobile').classList.toggle('open');
+}
+
+function enviarMissatge() {
+  const nom = document.getElementById('nom').value.trim();
+  const correu = document.getElementById('correu').value.trim();
+  const missatge = document.getElementById('missatge').value.trim();
+
+  if (!nom || !correu || !missatge) {
+    mostrarModal(false, 'FALTEN DADES', 'Si us plau, omple tots els camps.');
+    return;
+  }
+  if (!correu.includes('@')) {
+    mostrarModal(false, 'CORREU INCORRECTE', 'El correu electrònic ha de contenir @.');
+    return;
+  }
+
+  const mailto = `mailto:baixadadandrominesavinyo@gmail.com?subject=Missatge de ${encodeURIComponent(nom)}&body=${encodeURIComponent(missatge)}%0A%0A--- ${encodeURIComponent(nom)} (${encodeURIComponent(correu)})`;
+  window.location.href = mailto;
+  mostrarModal(true, 'GRÀCIES!', 'S\'obrirà el teu correu per enviar el missatge. Ens posarem en contacte aviat!');
+}
+
+function mostrarModal(exit, titol, text) {
+  const color = exit ? '#22c55e' : '#ef4444';
+  const icon = exit ? '✅' : '❌';
+  document.getElementById('modal-box').style.setProperty('--color', color);
+  document.getElementById('modal-icon').textContent = icon;
+  document.getElementById('modal-title').textContent = titol;
+  document.getElementById('modal-text').textContent = text;
+  document.getElementById('modal').classList.add('show');
+}
+
+function tancarModal() {
+  document.getElementById('modal').classList.remove('show');
+}
+</script>
+</body>
+</html>
