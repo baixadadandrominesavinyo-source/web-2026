@@ -190,7 +190,6 @@
       <div class="cat-age">Fins a 17 anys</div>
       <div class="cat-name">INFANTIL</div>
       <div class="cat-price">Gratuït</div>
-      <div style="font-size:0.8rem; color:var(--orange-light); margin-top:6px;">👕 Samarreta inclosa per a cada participant</div>
       <div class="cat-places">
         <div class="places-label" id="places-infantil">— equips inscrits</div>
         <div class="places-bar"><div class="places-fill" id="barra-infantil" style="width:0%"></div></div>
@@ -200,7 +199,6 @@
       <div class="cat-age">+18 anys</div>
       <div class="cat-name">ADULTS</div>
       <div class="cat-price">Gratuït</div>
-      <div style="font-size:0.8rem; color:var(--orange-light); margin-top:6px;">👕 Samarreta inclosa per a cada participant</div>
       <div class="cat-places">
         <div class="places-label" id="places-adults">— equips inscrits</div>
         <div class="places-bar"><div class="places-fill" id="barra-adults" style="width:0%"></div></div>
@@ -235,7 +233,7 @@
     </div>
     <div class="form-field">
       <label>Nombre de membres</label>
-      <select required onchange="actualitzarTalles()">
+      <select required>
         <option selected>1 persona</option>
         <option>2 persones</option>
         <option>3 persones</option>
@@ -253,7 +251,6 @@
         <option>15 persones</option>
       </select>
     </div>
-    <div class="form-full" id="talles-container"></div>
     <div class="submit-row">
       <button class="btn-main" id="btn-inscripcio" onclick="enviarInscripcio()">Confirmar inscripció</button>
     </div>
@@ -306,24 +303,7 @@ async function carregarComptador() {
 }
 carregarComptador();
 
-function actualitzarTalles() {
-  const select = document.querySelector('select');
-  const nombre = parseInt(select.value);
-  const container = document.getElementById('talles-container');
-  container.innerHTML = '';
-  for (let i = 1; i <= nombre; i++) {
-    container.innerHTML += `
-      <div class="form-field" style="margin-top:1rem;">
-        <label>Talla membre ${i}</label>
-        <select id="talla-${i}" required>
-          <option value="">Selecciona una talla</option>
-          <option>XS</option><option>S</option><option>M</option>
-          <option>L</option><option>XL</option><option>XXL</option>
-        </select>
-      </div>`;
-  }
-}
-actualitzarTalles();
+
 
 async function enviarInscripcio() {
   const camps = [
@@ -347,21 +327,11 @@ async function enviarInscripcio() {
     mostrarModal(false, 'TELÈFON INCORRECTE', 'El telèfon ha de tenir exactament 9 dígits.');
     return;
   }
-  const nombre = parseInt(camps[4].value);
-  const talles = [];
-  for (let i = 1; i <= nombre; i++) {
-    const talla = document.getElementById(`talla-${i}`);
-    if (talla && !talla.value) {
-      mostrarModal(false, 'FALTEN TALLES', `Falta la talla del membre ${i}.`);
-      return;
-    }
-    talles.push(talla ? talla.value : '—');
-  }
   const categoria = document.querySelector('.cat-box.active .cat-name').textContent;
   const dades = {
     equip: camps[0].value, responsable: camps[1].value,
     correu: camps[2].value, telefon: camps[3].value,
-    membres: camps[4].value, talles: talles.join(', '), categoria
+    membres: camps[4].value, categoria
   };
   const btn = document.getElementById('btn-inscripcio');
   btn.textContent = '⏳ Enviant...';
@@ -406,24 +376,7 @@ async function carregarComptador() {
 }
 carregarComptador();
 
-function actualitzarTalles() {
-  const select = document.querySelector('select');
-  const nombre = parseInt(select.value);
-  const container = document.getElementById('talles-container');
-  container.innerHTML = '';
-  for (let i = 1; i <= nombre; i++) {
-    container.innerHTML += `
-      <div class="form-field" style="margin-top:1rem;">
-        <label>Talla membre ${i}</label>
-        <select id="talla-${i}" required>
-          <option value="">Selecciona una talla</option>
-          <option>XS</option><option>S</option><option>M</option>
-          <option>L</option><option>XL</option><option>XXL</option>
-        </select>
-      </div>`;
-  }
-}
-actualitzarTalles();
+
 
 function selectCat(el) {
   document.querySelectorAll('.cat-box').forEach(c => c.classList.remove('active'));
@@ -453,21 +406,11 @@ async function enviarInscripcio() {
     return;
   }
   const url = 'https://script.google.com/macros/s/AKfycbzTcMnXp5LmTapS_mFGdpLAhGXtyRz3OCk-x0HW2zmqQNHnhUtRV8ychLFFWOyPf1GJ/exec';
-  const nombre = parseInt(camps[4].value);
-  const talles = [];
-  for (let i = 1; i <= nombre; i++) {
-    const talla = document.getElementById(`talla-${i}`);
-    if (talla && !talla.value) {
-      mostrarModal(false, 'FALTEN TALLES', `Falta la talla del membre ${i}.`);
-      return;
-    }
-    talles.push(talla ? talla.value : '—');
-  }
   const categoria = document.querySelector('.cat-box.active .cat-name').textContent;
   const dades = {
     equip: camps[0].value, responsable: camps[1].value,
     correu: camps[2].value, telefon: camps[3].value,
-    membres: camps[4].value, talles: talles.join(', '), categoria
+    membres: camps[4].value, categoria
   };
   const btn = document.getElementById('btn-inscripcio');
   btn.textContent = '⏳ Enviant...';
