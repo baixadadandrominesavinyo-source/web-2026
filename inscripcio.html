@@ -65,7 +65,7 @@
   /* HERO PETIT */
   .page-hero {
     position: relative;
-    min-height: 55vh;
+    min-height: 85vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -76,12 +76,12 @@
     position: absolute;
     inset: 0;
     background: url('inscripcio-bg.jpeg') center 40% / cover no-repeat;
-    filter: brightness(0.35);
+    filter: brightness(0.65);
   }
   .page-hero-gradient {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, var(--dark) 0%, transparent 60%);
+    background: linear-gradient(to top, var(--dark) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
   }
   .page-hero-content {
     position: relative;
@@ -190,7 +190,7 @@
       <div class="cat-age">Fins a 17 anys</div>
       <div class="cat-name">INFANTIL</div>
       <div class="cat-price">Gratuït</div>
-
+      <div style="font-size:0.8rem; color:var(--orange-light); margin-top:6px;">👕 Samarreta inclosa per a cada participant</div>
       <div class="cat-places">
         <div class="places-label" id="places-infantil">— equips inscrits</div>
         <div class="places-bar"><div class="places-fill" id="barra-infantil" style="width:0%"></div></div>
@@ -200,7 +200,7 @@
       <div class="cat-age">+18 anys</div>
       <div class="cat-name">ADULTS</div>
       <div class="cat-price">Gratuït</div>
-
+      <div style="font-size:0.8rem; color:var(--orange-light); margin-top:6px;">👕 Samarreta inclosa per a cada participant</div>
       <div class="cat-places">
         <div class="places-label" id="places-adults">— equips inscrits</div>
         <div class="places-bar"><div class="places-fill" id="barra-adults" style="width:0%"></div></div>
@@ -235,7 +235,7 @@
     </div>
     <div class="form-field">
       <label>Nombre de membres</label>
-      <select required>
+      <select required onchange="actualitzarTalles()">
         <option selected>1 persona</option>
         <option>2 persones</option>
         <option>3 persones</option>
@@ -253,7 +253,7 @@
         <option>15 persones</option>
       </select>
     </div>
-
+    <div class="form-full" id="talles-container"></div>
     <div class="submit-row">
       <button class="btn-main" id="btn-inscripcio" onclick="enviarInscripcio()">Confirmar inscripció</button>
     </div>
@@ -283,6 +283,11 @@ function toggleMenu() {
   document.getElementById('nav-mobile').classList.toggle('open');
 }
 
+function selectCat(el) {
+  document.querySelectorAll('.cat-box').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
 async function carregarComptador() {
   try {
     const url = 'https://script.google.com/macros/s/AKfycbzTcMnXp5LmTapS_mFGdpLAhGXtyRz3OCk-x0HW2zmqQNHnhUtRV8ychLFFWOyPf1GJ/exec';
@@ -301,7 +306,124 @@ async function carregarComptador() {
 }
 carregarComptador();
 
-function actualitzarTalles() {}
+function actualitzarTalles() {
+  const select = document.querySelector('select');
+  const nombre = parseInt(select.value);
+  const container = document.getElementById('talles-container');
+  container.innerHTML = '';
+  for (let i = 1; i <= nombre; i++) {
+    container.innerHTML += `
+      <div class="form-field" style="margin-top:1rem;">
+        <label>Talla membre ${i}</label>
+        <select id="talla-${i}" required>
+          <option value="">Selecciona una talla</option>
+          <option>XS</option><option>S</option><option>M</option>
+          <option>L</option><option>XL</option><option>XXL</option>
+        </select>
+      </div>`;
+  }
+}
+actualitzarTalles();
+
+async function enviarInscripcio() {
+  const camps = [
+    document.querySelector('input[placeholder="Ex: Els Turbo Bolets"]'),
+    document.querySelector('input[placeholder="Nom i cognoms"]'),
+    document.querySelector('input[placeholder="correu@exemple.com"]'),
+    document.querySelector('input[placeholder="600 000 000"]'),
+    document.querySelector('select')
+  ];
+  const buits = camps.filter(c => !c.value.trim());
+  if (buits.length > 0) {
+    mostrarModal(false, 'FALTEN CAMPS', `Tens ${buits.length} camp${buits.length > 1 ? 's' : ''} sense omplir.`);
+    return;
+  }
+  if (!camps[2].value.includes('@')) {
+    mostrarModal(false, 'CORREU INCORRECTE', 'El correu electrònic ha de contenir @.');
+    return;
+  }
+  const telefon = camps[3].value.replace(/\s/g, '');
+  if (!/^[0-9]{9}$/.test(telefon)) {
+    mostrarModal(false, 'TELÈFON INCORRECTE', 'El telèfon ha de tenir exactament 9 dígits.');
+    return;
+  }
+  const nombre = parseInt(camps[4].value);
+  const talles = [];
+  for (let i = 1; i <= nombre; i++) {
+    const talla = document.getElementById(`talla-${i}`);
+    if (talla && !talla.value) {
+      mostrarModal(false, 'FALTEN TALLES', `Falta la talla del membre ${i}.`);
+      return;
+    }
+    talles.push(talla ? talla.value : '—');
+  }
+  const categoria = document.querySelector('.cat-box.active .cat-name').textContent;
+  const dades = {
+    equip: camps[0].value, responsable: camps[1].value,
+    correu: camps[2].value, telefon: camps[3].value,
+    membres: camps[4].value, talles: talles.join(', '), categoria
+  };
+  const btn = document.getElementById('btn-inscripcio');
+  btn.textContent = '⏳ Enviant...';
+  btn.disabled = true;
+  const url = 'https://script.google.com/macros/s/AKfycbzTcMnXp5LmTapS_mFGdpLAhGXtyRz3OCk-x0HW2zmqQNHnhUtRV8ychLFFWOyPf1GJ/exec';
+  await fetch(url, { method: 'POST', body: JSON.stringify(dades), mode: 'no-cors' });
+  btn.textContent = 'Confirmar inscripció';
+  btn.disabled = false;
+  mostrarModal(true, 'EQUIP CONFIRMAT!', 'JA SOU DINS! Ara a construir la millor andròmina. Fins el 19 de setembre! ⚙️');
+  carregarComptador();
+}
+
+function mostrarModal(exit, titol, text) {
+  const color = exit ? '#22c55e' : '#ef4444';
+  const icon = exit ? '✅' : '❌';
+  document.getElementById('modal-box').style.setProperty('--color', color);
+  document.getElementById('modal-icon').textContent = icon;
+  document.getElementById('modal-title').textContent = titol;
+  document.getElementById('modal-text').textContent = text;
+  document.getElementById('modal').classList.add('show');
+}
+
+function tancarModal() {
+  document.getElementById('modal').classList.remove('show');
+}
+
+async function carregarComptador() {
+  try {
+    const url = 'https://script.google.com/macros/s/AKfycbzTcMnXp5LmTapS_mFGdpLAhGXtyRz3OCk-x0HW2zmqQNHnhUtRV8ychLFFWOyPf1GJ/exec';
+    const res = await fetch(url);
+    const data = await res.json();
+    const total = data.count;
+    document.getElementById('counter').textContent = total;
+    document.getElementById('places-infantil').textContent = total + ' equips inscrits';
+    document.getElementById('places-adults').textContent = total + ' equips inscrits';
+    const percentatge = Math.min(100, (total / 40) * 100);
+    document.getElementById('barra-infantil').style.width = percentatge + '%';
+    document.getElementById('barra-adults').style.width = percentatge + '%';
+  } catch {
+    document.getElementById('counter').textContent = '—';
+  }
+}
+carregarComptador();
+
+function actualitzarTalles() {
+  const select = document.querySelector('select');
+  const nombre = parseInt(select.value);
+  const container = document.getElementById('talles-container');
+  container.innerHTML = '';
+  for (let i = 1; i <= nombre; i++) {
+    container.innerHTML += `
+      <div class="form-field" style="margin-top:1rem;">
+        <label>Talla membre ${i}</label>
+        <select id="talla-${i}" required>
+          <option value="">Selecciona una talla</option>
+          <option>XS</option><option>S</option><option>M</option>
+          <option>L</option><option>XL</option><option>XXL</option>
+        </select>
+      </div>`;
+  }
+}
+actualitzarTalles();
 
 function selectCat(el) {
   document.querySelectorAll('.cat-box').forEach(c => c.classList.remove('active'));
@@ -331,10 +453,21 @@ async function enviarInscripcio() {
     return;
   }
   const url = 'https://script.google.com/macros/s/AKfycbzTcMnXp5LmTapS_mFGdpLAhGXtyRz3OCk-x0HW2zmqQNHnhUtRV8ychLFFWOyPf1GJ/exec';
+  const nombre = parseInt(camps[4].value);
+  const talles = [];
+  for (let i = 1; i <= nombre; i++) {
+    const talla = document.getElementById(`talla-${i}`);
+    if (talla && !talla.value) {
+      mostrarModal(false, 'FALTEN TALLES', `Falta la talla del membre ${i}.`);
+      return;
+    }
+    talles.push(talla ? talla.value : '—');
+  }
+  const categoria = document.querySelector('.cat-box.active .cat-name').textContent;
   const dades = {
     equip: camps[0].value, responsable: camps[1].value,
     correu: camps[2].value, telefon: camps[3].value,
-    membres: camps[4].value, talles: '—', categoria
+    membres: camps[4].value, talles: talles.join(', '), categoria
   };
   const btn = document.getElementById('btn-inscripcio');
   btn.textContent = '⏳ Enviant...';
